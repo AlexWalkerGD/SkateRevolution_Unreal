@@ -9,7 +9,7 @@ ASRev_CharacterBase::ASRev_CharacterBase()
  	PrimaryActorTick.bCanEverTick = false;
 
 	Skate = CreateDefaultSubobject<USkeletalMeshComponent>("Skate");
-	Skate->SetupAttachment(GetMesh(), FName("SkateFootSocket"));
+	
 
 }
 
