@@ -22,4 +22,7 @@ class SKATEREVOLUTION_API ISRev_ObstacleInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+
+    virtual void CompleteJump() = 0;
+
 };
