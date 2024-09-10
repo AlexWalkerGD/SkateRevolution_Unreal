@@ -6,8 +6,11 @@
 #include "GameFramework/PlayerController.h"
 #include "SRev_PlayerController.generated.h"
 
+class UAnimMontage;
 class UInputMappingContext;
 class UInputAction;
+class ACharacter;
+
 struct FInputActionValue;
 
 /**
@@ -27,8 +30,8 @@ protected:
 public:
     	
    	ASRev_PlayerController();	
-   	
-   	private:
+	
+	TObjectPtr<ACharacter> Character;
 
 	UPROPERTY(EditAnywhere, Category= "Input");
    	TObjectPtr<UInputMappingContext> SRevContext;
@@ -36,5 +39,15 @@ public:
 	UPROPERTY(EditAnywhere, Category= "Input");
 	TObjectPtr<UInputAction> MoveAction;
 
+	UPROPERTY(EditAnywhere, Category= "Input");
+	TObjectPtr<UInputAction> RotateAction;
+
+	UPROPERTY(EditAnywhere, Category= "Input");
+	TObjectPtr<UInputAction> JumpAction;
+	
+
 	void Move(const FInputActionValue& InputActionValue);
+	void Rotate(const FInputActionValue& InputActionValue);
+	void StartJump();
+	void StopJump();
 };

@@ -14,5 +14,7 @@ class SKATEREVOLUTION_API ASRev_Character : public ASRev_CharacterBase
 {
 	GENERATED_BODY()
 
-	
+public:
+	ASRev_Character();
+
 };

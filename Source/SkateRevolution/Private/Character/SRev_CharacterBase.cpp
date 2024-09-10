@@ -6,10 +6,7 @@
 // Sets default values
 ASRev_CharacterBase::ASRev_CharacterBase()
 {
- 	PrimaryActorTick.bCanEverTick = false;
-
-	Skate = CreateDefaultSubobject<USkeletalMeshComponent>("Skate");
-	
+ 	PrimaryActorTick.bCanEverTick = false;	
 
 }
 
@@ -17,6 +14,8 @@ ASRev_CharacterBase::ASRev_CharacterBase()
 void ASRev_CharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	
 	
 }
 
