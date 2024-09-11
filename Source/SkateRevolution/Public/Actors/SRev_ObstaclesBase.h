@@ -32,5 +32,8 @@ private:
 	TObjectPtr<UBoxComponent> Box;
 
 	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UBoxComponent> Blocker;
+
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> Mesh;
 };

@@ -15,14 +15,15 @@ ASRev_ObstaclesBase::ASRev_ObstaclesBase()
 	
 	Box = CreateDefaultSubobject<UBoxComponent>("Box");
 	Box->SetupAttachment(GetRootComponent());
-	
-	
 
+	Blocker = CreateDefaultSubobject<UBoxComponent>("Blocker");
+	Blocker->SetupAttachment(GetRootComponent());
+	
 }
 
 void ASRev_ObstaclesBase::CompleteJump()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Passou"));
 }
 
 // Called when the game starts or when spawned
