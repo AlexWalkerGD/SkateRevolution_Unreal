@@ -7,6 +7,7 @@
 #include "SRev_ScoreComponent.generated.h"
 
 
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SKATEREVOLUTION_API USRev_ScoreComponent : public UActorComponent
 {
@@ -24,9 +25,13 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	virtual void IncreasePoints(int32 amount);
+	virtual void GetRecord(int32 amount);
 
 	UPROPERTY(EditAnywhere)
 	int32 TotalScore = 0;
+
+	UPROPERTY()
+	class ASRev_HUD* revHUD;
 
 private:
 	

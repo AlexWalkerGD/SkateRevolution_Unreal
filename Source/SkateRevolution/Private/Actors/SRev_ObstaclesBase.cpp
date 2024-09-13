@@ -23,7 +23,6 @@ ASRev_ObstaclesBase::ASRev_ObstaclesBase()
 
 void ASRev_ObstaclesBase::CompleteJump()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Passou"));
 }
 
 // Called when the game starts or when spawned

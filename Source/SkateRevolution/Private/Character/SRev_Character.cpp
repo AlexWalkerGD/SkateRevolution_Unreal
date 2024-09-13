@@ -15,6 +15,7 @@
 #include "UI/SRev_UserWidget.h"
 
 
+
 ASRev_Character::ASRev_Character()
 {
 	GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -90,7 +91,7 @@ void ASRev_Character::OnDeath()
 	{
 		//PlayAnimMontage(AnimFall);
 	}
-	
+
 	ASRev_PlayerController* PlayerController = Cast<ASRev_PlayerController>(GetController());
 	PlayerController->UnPossess();
 	
@@ -103,9 +104,7 @@ void ASRev_Character::OnDeath()
 			FInputModeUIOnly Mode;
 			Mode.SetWidgetToFocus(RUserWidget->GetCachedWidget());
 			PlayerController->SetInputMode(Mode);
-			PlayerController->bShowMouseCursor = true;
-			
-			
+			PlayerController->bShowMouseCursor = true;	
 		}
 	}
 

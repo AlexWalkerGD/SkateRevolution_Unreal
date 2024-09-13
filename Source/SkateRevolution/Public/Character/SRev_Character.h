@@ -7,6 +7,7 @@
 #include "Components/SRev_ScoreComponent.h"
 #include "Components/SRev_WidgetComponent.h"
 #include "Animation/AnimMontage.h"
+#include "Game/SRev_HUD.h"
 #include "SRev_Character.generated.h"
 
 /**
@@ -15,6 +16,8 @@
 
 class UCapsuleComponent;
 class UBoxComponent;
+class ASRev_PlayerController;
+class ASRev_HUD;
 
 UCLASS()
 class SKATEREVOLUTION_API ASRev_Character : public ASRev_CharacterBase
@@ -46,7 +49,7 @@ public:
 	TSubclassOf<class USRev_UserWidget> ResWidget;
 
 	UPROPERTY(VisibleInstanceOnly, Category="Widgets")
-	class USRev_UserWidget* RUserWidget;
+	USRev_UserWidget* RUserWidget;
 	
 	UPROPERTY(EditAnywhere,Category="Components")
 	TObjectPtr<USkeletalMeshComponent> SSkate;
