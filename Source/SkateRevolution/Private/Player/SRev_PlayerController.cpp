@@ -21,6 +21,10 @@ void ASRev_PlayerController::BeginPlay()
     UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
     check(Subsystem);
     Subsystem->AddMappingContext(SRevContext, 0);
+
+    FInputModeGameOnly Mode;
+    SetInputMode(Mode);
+    bShowMouseCursor = false;
 }
 
 void ASRev_PlayerController::SetupInputComponent()

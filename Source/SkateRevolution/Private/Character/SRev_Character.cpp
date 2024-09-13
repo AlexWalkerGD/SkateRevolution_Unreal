@@ -6,10 +6,13 @@
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SRev_ScoreComponent.h"
+
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
+
 #include "Interaction/SRev_ObstacleInterface.h"
 #include "Player/SRev_PlayerController.h"
+#include "UI/SRev_UserWidget.h"
 
 
 ASRev_Character::ASRev_Character()
@@ -49,6 +52,7 @@ void ASRev_Character::BeginPlay()
 	
 	Capsule->OnComponentBeginOverlap.AddDynamic(this, &ASRev_Character::OnOverlap);
 	BlockageDetector->OnComponentBeginOverlap.AddDynamic(this, &ASRev_Character::OnHit);
+	
 }
 
 void ASRev_Character::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -89,6 +93,32 @@ void ASRev_Character::OnDeath()
 	
 	ASRev_PlayerController* PlayerController = Cast<ASRev_PlayerController>(GetController());
 	PlayerController->UnPossess();
+	
+	if(IsValid(ResWidget))
+	{
+		RUserWidget = CreateWidget<USRev_UserWidget>(PlayerController, ResWidget);
+		if(RUserWidget != nullptr)
+		{
+			RUserWidget->AddToViewport();
+			FInputModeUIOnly Mode;
+			Mode.SetWidgetToFocus(RUserWidget->GetCachedWidget());
+			PlayerController->SetInputMode(Mode);
+			PlayerController->bShowMouseCursor = true;
+			
+			
+		}
+	}
+
+	RestartGame();
+	
+}
+
+void ASRev_Character::RestartGame()
+{
+	if(IsValid(ResWidget))
+	{
+	}
+	
 }
 	
 

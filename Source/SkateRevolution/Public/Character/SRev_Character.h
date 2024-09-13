@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Character/SRev_CharacterBase.h"
 #include "Components/SRev_ScoreComponent.h"
+#include "Components/SRev_WidgetComponent.h"
 #include "Animation/AnimMontage.h"
 #include "SRev_Character.generated.h"
 
@@ -35,6 +36,17 @@ public:
 	UFUNCTION()
 	virtual void OnDeath();
 
+	UFUNCTION()
+	virtual void RestartGame();
+
+
+	
+
+	UPROPERTY(EditAnywhere, Category="Widgets")
+	TSubclassOf<class USRev_UserWidget> ResWidget;
+
+	UPROPERTY(VisibleInstanceOnly, Category="Widgets")
+	class USRev_UserWidget* RUserWidget;
 	
 	UPROPERTY(EditAnywhere,Category="Components")
 	TObjectPtr<USkeletalMeshComponent> SSkate;
@@ -53,5 +65,7 @@ public:
 
 	UPROPERTY(EditAnywhere,Category="Anim")
 	TObjectPtr<UAnimMontage> AnimFall;
+
+	
 	
 };
