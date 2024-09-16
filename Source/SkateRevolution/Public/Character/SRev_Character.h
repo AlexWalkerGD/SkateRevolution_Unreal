@@ -52,7 +52,9 @@ public:
 
 	UFUNCTION()
 	virtual void Decelerate();
-	
+
+	UFUNCTION()
+	virtual void JumpSkate();
 
 	//////////// Variables of Widgets of player ////////////
 	
@@ -64,9 +66,6 @@ public:
 
 
 	//////////// Variables of Components of player ////////////
-	
-	UPROPERTY(EditAnywhere,Category="Components")
-	TObjectPtr<USkeletalMeshComponent> SSkate;
 
 	UPROPERTY(EditAnywhere,Category="Components")
 	TObjectPtr<UCapsuleComponent> Capsule;
@@ -80,10 +79,19 @@ public:
 	UPROPERTY(EditAnywhere,Category="Components")
 	TObjectPtr<USRev_ScoreComponent> ScoreComponent;
 
+	UPROPERTY(EditAnywhere,Category="Components")
+	TObjectPtr<USkeletalMeshComponent> SkateObject;
+
 	//////////// Variables of animations of player ////////////
 	
 	UPROPERTY(EditAnywhere,Category="Anim")
 	TObjectPtr<UAnimMontage> AnimFall;
+
+	UPROPERTY(EditAnywhere,Category="Anim|Skate")
+	UAnimationAsset* AnimSkate;
+	
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Anim|Skate")
+	bool bIsJumping;
 	
 
 	//////////// Variables of movement of player ////////////

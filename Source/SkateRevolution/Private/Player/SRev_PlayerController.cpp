@@ -5,6 +5,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/Character.h"
 #include "EnhancedInputComponent.h"
+#include "Character/SRev_Character.h"
 
 
 ASRev_PlayerController::ASRev_PlayerController()
@@ -17,7 +18,9 @@ void ASRev_PlayerController::BeginPlay()
     Super::BeginPlay();
     check(SRevContext);
 
-    Character = Cast<ACharacter>(GetCharacter());    
+    //Character = Cast<ACharacter>(GetCharacter());
+
+    SCharacter = Cast<ASRev_Character>(GetCharacter());
     
     UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
     check(Subsystem);
@@ -74,12 +77,16 @@ void ASRev_PlayerController::Rotate(const FInputActionValue& InputActionValue)
 
 void ASRev_PlayerController::StartJump()
 {
-    Character->Jump();
+    SCharacter->Jump();
+    SCharacter->PlayAnimMontage(SCharacter->AnimFall);
+    SCharacter->JumpSkate();
+    
 }
 
 void ASRev_PlayerController::StopJump()
 {
-    Character->StopJumping();
+    SCharacter->StopJumping();
 }
+
 
 

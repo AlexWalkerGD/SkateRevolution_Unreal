@@ -29,12 +29,11 @@ ASRev_Character::ASRev_Character()
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 
-	SSkate = CreateDefaultSubobject<USkeletalMeshComponent>("Skate");
-	SSkate->SetupAttachment(GetRootComponent());
-	SSkate->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-
 	Capsule = CreateDefaultSubobject<UCapsuleComponent>("Capsule");
 	Capsule->SetupAttachment(GetRootComponent());
+
+	SkateObject = CreateDefaultSubobject<USkeletalMeshComponent>("SkateObject");
+	SkateObject->SetupAttachment(GetRootComponent());
 
 	CollisionSkate = CreateDefaultSubobject<UCapsuleComponent>("CollisionSkate");
 	CollisionSkate->SetupAttachment(GetRootComponent());
@@ -106,13 +105,9 @@ void ASRev_Character::OnHit(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 
 void ASRev_Character::OnDeath()
 {
-	if(AnimFall)
-	{
-		//PlayAnimMontage(AnimFall);
-	}
-
 	ASRev_PlayerController* PlayerController = Cast<ASRev_PlayerController>(GetController());
 	PlayerController->UnPossess();
+	SkateObject->SetSimulatePhysics(true);
 	
 	if(IsValid(ResWidget))
 	{
@@ -163,6 +158,12 @@ void ASRev_Character::Decelerate()
 	{
 		bIsBoost = false;
 	}
+}
+
+void ASRev_Character::JumpSkate()
+{
+	if(AnimSkate)
+	SkateObject->PlayAnimation(AnimSkate, false);
 }
 	
 

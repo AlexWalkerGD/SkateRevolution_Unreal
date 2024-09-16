@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "Character/SRev_Character.h"
 #include "SRev_PlayerController.generated.h"
 
 class UAnimMontage;
@@ -31,7 +32,8 @@ public:
     	
    	ASRev_PlayerController();	
 	
-	TObjectPtr<ACharacter> Character;
+	//TObjectPtr<ACharacter> Character;
+	ASRev_Character* SCharacter;
 
 	UPROPERTY(EditAnywhere, Category= "Input");
    	TObjectPtr<UInputMappingContext> SRevContext;
