@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Character/SRev_CharacterBase.h"
 #include "Components/SRev_ScoreComponent.h"
-#include "Components/SRev_WidgetComponent.h"
 #include "Animation/AnimMontage.h"
 #include "Game/SRev_HUD.h"
 #include "SRev_Character.generated.h"
@@ -27,8 +26,14 @@ class SKATEREVOLUTION_API ASRev_Character : public ASRev_CharacterBase
 public:
 	ASRev_Character();
 
+	//////////// Functions Default of player ////////////
+
 	virtual void BeginPlay() override;
 
+	virtual void Tick(float DeltaTime) override;
+	
+
+	//////////// Functions Collision of player ////////////
 
 	UFUNCTION()
 	virtual void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SwepResult);
@@ -36,20 +41,29 @@ public:
 	UFUNCTION()
 	virtual void OnHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SwepResult);
 
+
+	//////////// Functions of events during the game ////////////
+	
 	UFUNCTION()
 	virtual void OnDeath();
 
 	UFUNCTION()
-	virtual void RestartGame();
+	virtual void Accelerate();
 
-
+	UFUNCTION()
+	virtual void Decelerate();
 	
 
+	//////////// Variables of Widgets of player ////////////
+	
 	UPROPERTY(EditAnywhere, Category="Widgets")
 	TSubclassOf<class USRev_UserWidget> ResWidget;
 
 	UPROPERTY(VisibleInstanceOnly, Category="Widgets")
 	USRev_UserWidget* RUserWidget;
+
+
+	//////////// Variables of Components of player ////////////
 	
 	UPROPERTY(EditAnywhere,Category="Components")
 	TObjectPtr<USkeletalMeshComponent> SSkate;
@@ -66,9 +80,40 @@ public:
 	UPROPERTY(EditAnywhere,Category="Components")
 	TObjectPtr<USRev_ScoreComponent> ScoreComponent;
 
+	//////////// Variables of animations of player ////////////
+	
 	UPROPERTY(EditAnywhere,Category="Anim")
 	TObjectPtr<UAnimMontage> AnimFall;
+	
 
+	//////////// Variables of movement of player ////////////
+
+	UPROPERTY(EditAnywhere,Category="Movement")
+	bool CanChangeSpeed = false;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Movement")
+	bool bIsBoost = false;
+
+	UPROPERTY(EditAnywhere,Category="Movement")
+	float MaxBoostSpeed;
+
+	UPROPERTY(EditAnywhere,Category="Movement")
+	float MinBoostSpeed;
+
+	UPROPERTY(EditAnywhere,Category="Movement")
+	float FactorResult;
+
+	UPROPERTY(EditAnywhere,Category="Movement")
+	float RunSpeed;
+
+	UPROPERTY(EditAnywhere,Category="Movement")
+	float CurrentFuel;
+	
+	UPROPERTY(EditAnywhere,Category="Movement")
+	float BoostAcceleration;
+
+	UPROPERTY(EditAnywhere,Category="Movement")
+	float FuelConsumptionRate;
 	
 	
 };

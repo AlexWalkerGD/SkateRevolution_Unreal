@@ -18,6 +18,8 @@
 
 ASRev_Character::ASRev_Character()
 {
+	PrimaryActorTick.bCanEverTick = true;
+	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
 	GetCharacterMovement()->bConstrainToPlane = true;
@@ -41,6 +43,15 @@ ASRev_Character::ASRev_Character()
 	BlockageDetector->SetupAttachment(GetRootComponent());
 
 	ScoreComponent = CreateDefaultSubobject<USRev_ScoreComponent>("ScoreComponent");
+
+	
+	bIsBoost = false;
+	MaxBoostSpeed = 1500.0f;
+	MinBoostSpeed = 100.0f;
+	RunSpeed = 600.0f;
+	CurrentFuel= 0.f;
+	BoostAcceleration = 1000.0f;
+	FuelConsumptionRate = 10.f;
 	
 	
 }
@@ -54,6 +65,16 @@ void ASRev_Character::BeginPlay()
 	Capsule->OnComponentBeginOverlap.AddDynamic(this, &ASRev_Character::OnOverlap);
 	BlockageDetector->OnComponentBeginOverlap.AddDynamic(this, &ASRev_Character::OnHit);
 	
+}
+
+void ASRev_Character::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if(CanChangeSpeed == true)
+	{
+		Accelerate();
+	}
 }
 
 void ASRev_Character::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -72,11 +93,9 @@ void ASRev_Character::OnHit(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 {
 	if(ISRev_ObstacleInterface* ObsInterface = Cast<ISRev_ObstacleInterface>(OtherActor))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Tem Interface"));
 		
 		if(OtherComp->ComponentHasTag("Blocker")) 
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Tem Tag"));
 			GetMesh()->SetCollisionProfileName("Ragdoll");
 			GetMesh()->SetSimulatePhysics(true);
 
@@ -107,17 +126,43 @@ void ASRev_Character::OnDeath()
 			PlayerController->bShowMouseCursor = true;	
 		}
 	}
-
-	RestartGame();
-	
 }
 
-void ASRev_Character::RestartGame()
+void ASRev_Character::Accelerate()
 {
-	if(IsValid(ResWidget))
+	if (CurrentFuel > 0.0f)
 	{
+		bIsBoost = true;
+
+		if (GetCharacterMovement()->MaxWalkSpeed < MaxBoostSpeed || GetCharacterMovement()->MaxWalkSpeed < MinBoostSpeed)
+		{
+			float NewSpeed = GetCharacterMovement()->MaxWalkSpeed + ((BoostAcceleration * FactorResult) * GetWorld()->GetDeltaSeconds());
+			
+			GetCharacterMovement()->MaxWalkSpeed = FMath::Clamp(NewSpeed, MinBoostSpeed, MaxBoostSpeed);
+		}
+
+		CurrentFuel = FMath::Max(CurrentFuel - (FuelConsumptionRate * GetWorld()->GetDeltaSeconds()), 0.0f);
 	}
-	
+	else
+	{
+		Decelerate();
+	}
+
+}
+
+void ASRev_Character::Decelerate()
+{
+	if (GetCharacterMovement()->MaxWalkSpeed > RunSpeed || GetCharacterMovement()->MaxWalkSpeed < RunSpeed)
+	{
+		float NewSpeed = GetCharacterMovement()->MaxWalkSpeed - ((BoostAcceleration * FactorResult) * GetWorld()->GetDeltaSeconds());
+
+		GetCharacterMovement()->MaxWalkSpeed = FMath::Max(NewSpeed, RunSpeed);
+	}
+
+	if (GetCharacterMovement()->MaxWalkSpeed > 500.f)
+	{
+		bIsBoost = false;
+	}
 }
 	
 
