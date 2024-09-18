@@ -138,7 +138,7 @@ void ASRev_Character::Accelerate()
 
 		CurrentFuel = FMath::Max(CurrentFuel - (FuelConsumptionRate * GetWorld()->GetDeltaSeconds()), 0.0f);
 	}
-	else
+	else    
 	{
 		Decelerate();
 	}
