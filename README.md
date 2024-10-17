@@ -3,12 +3,12 @@
 This project is a demonstration of a single-player skateboarding system where players can explore environments and perform basic tricks like jumping, providing a fun and dynamic experience.
 
 ## Features
-Simple Movement and Jumping: Players can skate around the environment using basic movement keys and jump with the spacebar.
-Dynamic Trick System: While the focus is on basic movement, the system can be expanded for more tricks in the future.
+- Simple Movement and Jumping: Players can skate around the environment using basic movement keys and jump with the spacebar.
+- Dynamic Trick System: While the focus is on basic movement, the system can be expanded for more tricks in the future.
 
 ## How to Play
-Move Around: Use the movement keys (W, A, S, D) to skate around the environment.
-Jump: Press the spacebar to jump over obstacles and perform simple tricks.
+1. Move Around: Use the movement keys (W, A, S, D) to skate around the environment.
+2. Jump: Press the spacebar to jump over obstacles and perform simple tricks.
 
 ## Gameplay Screenshots
 ![HighresScreenshot00001](https://github.com/user-attachments/assets/14775bb0-092e-4e7d-b00d-db1213cb308b)
