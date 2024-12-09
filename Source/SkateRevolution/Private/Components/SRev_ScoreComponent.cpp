@@ -13,6 +13,9 @@
 USRev_ScoreComponent::USRev_ScoreComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+
+	SoundUpScore = CreateDefaultSubobject<USoundBase>(TEXT("Sound"));
+	SoundJump = CreateDefaultSubobject<USoundBase>(TEXT("SoundJump"));
 }
 
 
@@ -39,7 +42,9 @@ void USRev_ScoreComponent::IncreasePoints(int32 amount)
 	if (revHUD)
 	{
 		revHUD->UpdateScore(TotalScore);
+		
 		GetRecord(TotalScore);
+		UGameplayStatics::PlaySound2D(GetWorld(), SoundJump, 1,1,0, NULL, nullptr, true);
 	}
 }
 
@@ -51,7 +56,7 @@ void USRev_ScoreComponent::GetRecord(int32 amount)
 	{
 		revInstance->InstanceRecord = amount;
 		revHUD->UpdateRecord(revInstance->InstanceRecord);
-		
+		UGameplayStatics::PlaySound2D(GetWorld(), SoundUpScore, 1,1,0, NULL, nullptr, true);
 	}
 }
 

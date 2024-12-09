@@ -31,8 +31,8 @@ protected:
 public:
     	
    	ASRev_PlayerController();	
+
 	
-	//TObjectPtr<ACharacter> Character;
 	ASRev_Character* SCharacter;
 
 	UPROPERTY(EditAnywhere, Category= "Input");
@@ -46,10 +46,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category= "Input");
 	TObjectPtr<UInputAction> JumpAction;
-	
 
 	void Move(const FInputActionValue& InputActionValue);
 	void Rotate(const FInputActionValue& InputActionValue);
 	void StartJump();
-	void StopJump();
+	void StopRun();
 };

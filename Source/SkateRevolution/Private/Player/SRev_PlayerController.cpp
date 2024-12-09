@@ -5,7 +5,9 @@
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/Character.h"
 #include "EnhancedInputComponent.h"
+#include "FrameTypes.h"
 #include "Character/SRev_Character.h"
+#include "Kismet/KismetMathLibrary.h"
 
 
 ASRev_PlayerController::ASRev_PlayerController()
@@ -24,13 +26,7 @@ void ASRev_PlayerController::BeginPlay()
     
     UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
     check(Subsystem);
-    Subsystem->AddMappingContext(SRevContext, 0);
-    
-    FInputModeGameOnly Mode;
-    SetInputMode(Mode);
-    bShowMouseCursor = false;
-
-    
+    Subsystem->AddMappingContext(SRevContext, 0);    
 }
 
 void ASRev_PlayerController::SetupInputComponent()
@@ -40,10 +36,9 @@ void ASRev_PlayerController::SetupInputComponent()
     UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 
     EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ASRev_PlayerController::Move);
+    EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &ASRev_PlayerController::StopRun);
     EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &ASRev_PlayerController::Rotate);
-    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ASRev_PlayerController::StartJump);
-    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ASRev_PlayerController::StopJump);
-    
+    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ASRev_PlayerController::StartJump); 
 }
 
 void ASRev_PlayerController::Move(const FInputActionValue& InputActionValue)
@@ -57,7 +52,7 @@ void ASRev_PlayerController::Move(const FInputActionValue& InputActionValue)
 
     if (APawn* ControlledPawn = GetPawn<APawn>())
     {
-        ControlledPawn->AddMovementInput(ForwardDirection, InputAxisValue.Y);
+        ControlledPawn->AddMovementInput(ForwardDirection, InputAxisValue.Y);        
         ControlledPawn->AddMovementInput(RightDirection, InputAxisValue.X);
     }
     
@@ -77,15 +72,31 @@ void ASRev_PlayerController::Rotate(const FInputActionValue& InputActionValue)
 
 void ASRev_PlayerController::StartJump()
 {
-    SCharacter->Jump();
-    SCharacter->PlayAnimMontage(SCharacter->AnimFall);
-    SCharacter->JumpSkate();
-    
+
+    if(!SCharacter->bIsJumping)
+    {
+        SCharacter->bIsJumping = true;
+        
+        if(SCharacter->bIsJumping)
+        {
+            SCharacter->Jump();
+            SCharacter->PlayAnimMontage(SCharacter->AnimFall);
+            SCharacter->JumpSkate();
+
+            FTimerHandle TimerHandle;
+            GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+            {
+                UE_LOG(LogTemp, Warning, TEXT("CanJump"));
+                SCharacter->bIsJumping = false;
+                 }, 1, false);
+        }        
+    }
 }
 
-void ASRev_PlayerController::StopJump()
+
+void ASRev_PlayerController::StopRun()
 {
-    SCharacter->StopJumping();
+    SCharacter->bStopMovementByCurve = true;
 }
 
 

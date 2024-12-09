@@ -8,6 +8,8 @@
 #include "GameFramework/Actor.h"
 #include "SRev_PickupItem.generated.h"
 
+class USoundBase;
+
 UCLASS()
 class SKATEREVOLUTION_API ASRev_PickupItem : public AActor
 {
@@ -21,6 +23,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category="Components")
 	TObjectPtr<UStaticMeshComponent> Mesh;
+
+	UPROPERTY(EditAnywhere, Category="Sounds")
+	TObjectPtr<USoundBase> SoundPickup;
 
 	UPROPERTY(EditAnywhere, Category="Boost")
 	float Fuel;

@@ -14,7 +14,9 @@
  */
 
 class UCapsuleComponent;
+class USceneComponent;
 class UBoxComponent;
+class USoundBase;
 class ASRev_PlayerController;
 class ASRev_HUD;
 
@@ -41,7 +43,9 @@ public:
 	UFUNCTION()
 	virtual void OnHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SwepResult);
 
-
+	//UFUNCTION()
+	//virtual void OnGround(USceneComponent* Component);
+	
 	//////////// Functions of events during the game ////////////
 	
 	UFUNCTION()
@@ -56,6 +60,9 @@ public:
 	UFUNCTION()
 	virtual void JumpSkate();
 
+	//UFUNCTION()
+	//virtual void StopRun();
+	
 	//////////// Variables of Widgets of player ////////////
 	
 	UPROPERTY(EditAnywhere, Category="Widgets")
@@ -90,10 +97,20 @@ public:
 	UPROPERTY(EditAnywhere,Category="Anim|Skate")
 	UAnimationAsset* AnimSkate;
 	
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Anim|Skate")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Anim")
 	bool bIsJumping;
-	
 
+	//////////// Variables of sounds on death ////////////
+
+	UPROPERTY(EditAnywhere, Category="Sounds")
+	TObjectPtr<USoundBase> Sound1;
+	
+	UPROPERTY(EditAnywhere, Category="Sounds")
+	TObjectPtr<USoundBase> Sound2;
+	
+	UPROPERTY(EditAnywhere, Category="Sounds")
+	TObjectPtr<USoundBase> Sound3;
+	
 	//////////// Variables of movement of player ////////////
 
 	UPROPERTY(EditAnywhere,Category="Movement")
@@ -122,6 +139,11 @@ public:
 
 	UPROPERTY(EditAnywhere,Category="Movement")
 	float FuelConsumptionRate;
-	
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Curve")
+	UCurveFloat* Curve;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Curve")
+	bool bStopMovementByCurve;
 	
 };

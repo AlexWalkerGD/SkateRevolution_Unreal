@@ -2,8 +2,9 @@
 
 
 #include "Actors/SRev_PickupItem.h"
-
+#include "Components/AudioComponent.h"
 #include "Character/SRev_Character.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ASRev_PickupItem::ASRev_PickupItem()
@@ -15,6 +16,8 @@ ASRev_PickupItem::ASRev_PickupItem()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	Mesh->SetupAttachment(GetRootComponent());
+
+	SoundPickup = CreateDefaultSubobject<USoundBase>(TEXT("Sound"));
 }
 
 void ASRev_PickupItem::BeginPlay()
@@ -30,6 +33,7 @@ void ASRev_PickupItem::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 {
 		if(ASRev_Character* Character = Cast<ASRev_Character>(OtherActor))
 		{
+			UGameplayStatics::PlaySound2D(GetWorld(), SoundPickup, 1,1,0, NULL, nullptr, true);
 			Character->CurrentFuel = Fuel;
 			Character->FactorResult = NumberFactor;
 			Character->CanChangeSpeed = true;

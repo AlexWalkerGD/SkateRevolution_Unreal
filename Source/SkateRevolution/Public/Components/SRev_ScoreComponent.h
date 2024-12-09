@@ -30,6 +30,12 @@ public:
 	UPROPERTY(EditAnywhere)
 	int32 TotalScore = 0;
 
+	UPROPERTY(EditAnywhere, Category="Sounds")
+	TObjectPtr<USoundBase> SoundUpScore;
+
+	UPROPERTY(EditAnywhere, Category="Sounds")
+	TObjectPtr<USoundBase> SoundJump;
+
 	UPROPERTY()
 	class ASRev_HUD* revHUD;
 
